@@ -42,7 +42,7 @@ async function postNewImageAd(req, res) {
 
 async function getAllAds(req, res) {
     try{
-        res.json(await adsOPerationsManagmentFunctions.getAllAds(req.query.language));
+        res.json(await adsOPerationsManagmentFunctions.getAllAds({}, req.query.language));
     }
     catch(err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
