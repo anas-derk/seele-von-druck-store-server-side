@@ -118,12 +118,12 @@ async function changePreviousProjectImage(authorizationId, projectId, newPreviou
     try{
         const admin = await adminModel.findById(authorizationId);
         if (admin){
-            const brand = await previousProjectModel.findOneAndUpdate({ _id: projectId }, { imagePath: newPreviousProjectPath });
-            if (brand) {
+            const previousProjectInfo = await previousProjectModel.findOneAndUpdate({ _id: projectId }, { imagePath: newPreviousProjectPath });
+            if (previousProjectInfo) {
                 return {
                     msg: getSuitableTranslations("Updating Previous Project Image Process Has Been Successfully !!", language),
                     error: false,
-                    data: { deletedBrandImagePath: brand.imagePath }
+                    data: { deletedPreviousProjectPath: previousProjectInfo.imagePath }
                 }
             }
             return {

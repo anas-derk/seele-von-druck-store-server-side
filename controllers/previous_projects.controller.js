@@ -53,9 +53,9 @@ async function getAllPreviousProjectsInsideThePage(req, res) {
 
 async function deletePreviousProject(req, res) {
     try{
-        const result = await previousProjectsManagmentFunctions.deletePreviousProject(req.data._id, req.params.brandId, req.query.language);
+        const result = await previousProjectsManagmentFunctions.deletePreviousProject(req.data._id, req.params.projectId, req.query.language);
         if (!result.error) {
-            unlinkSync(result.data.deletedBrandPath);
+            unlinkSync(result.data.deletedPreviousProjectPath);
         }
         else {
             if (result.msg === "Sorry, This Admin Is Not Exist !!") {
@@ -71,7 +71,7 @@ async function deletePreviousProject(req, res) {
 
 async function putPreviousProjectInfo(req, res) {
     try{
-        const result = await previousProjectsManagmentFunctions.updatePreviousProjectInfo(req.data._id, req.params.brandId, req.body.newBrandTitle, req.query.language);
+        const result = await previousProjectsManagmentFunctions.updatePreviousProjectInfo(req.data._id, req.params.projectId, req.body.newProjectDescription, req.query.language);
         if (result.error) {
             if (result.msg === "Sorry, This Admin Is Not Exist !!") {
                 return res.status(401).json(result);
@@ -88,9 +88,9 @@ async function putPreviousProjectImage(req, res) {
     try {
         const outputImageFilePath = `assets/images/previous-projects/${Math.random()}_${Date.now()}__${req.file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`;
         await handleResizeImagesAndConvertFormatToWebp([req.file.buffer], [outputImageFilePath]);
-        const result = await previousProjectsManagmentFunctions.changePreviousProjectImage(req.data._id, req.params.brandId, outputImageFilePath, req.query.language);
+        const result = await previousProjectsManagmentFunctions.changePreviousProjectImage(req.data._id, req.params.projectId, outputImageFilePath, req.query.language);
         if (!result.error) {
-            unlinkSync(result.data.deletedBrandImagePath);
+            unlinkSync(result.data.deletedPreviousProjectPath);
         }
         else {
             if (result.msg === "Sorry, This Admin Is Not Exist !!") {

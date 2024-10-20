@@ -37,6 +37,19 @@ previousProjectsRouter.post("/add-new-project",
     previousProjectsController.postNewPreviousProduct
 );
 
+previousProjectsRouter.get("/previous-projects-count", previousProjectsController.getPreviousProductsCount);
+
+previousProjectsRouter.get("/all-previous-projects-inside-the-page",
+    (req, res, next) => {
+        const { pageNumber, pageSize } = req.query;
+        validateIsExistValueForFieldsAndDataTypes([
+            { fieldName: "page Number", fieldValue: Number(pageNumber), dataType: "number", isRequiredValue: true },
+            { fieldName: "page Size", fieldValue: Number(pageSize), dataType: "number", isRequiredValue: true },
+        ], res, next);
+    },
+    previousProjectsController.getAllPreviousProjectsInsideThePage
+);
+
 previousProjectsRouter.delete("/:projectId",
     validateJWT,
     (req, res, next) => {
