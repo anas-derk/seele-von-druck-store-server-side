@@ -43,7 +43,6 @@ productsRouter.post("/add-new-product",
             { fieldName: "quantity", fieldValue: Number(quantity), dataType: "number", isRequiredValue: true },
         ], res, next);
     },
-    // (req, res, next) => validateName((Object.assign({}, req.body)).name, res, next, "Sorry, Please Send Valid Product Name !!"),
     (req, res, next) => {
         const { price, quantity } = Object.assign({}, req.body);
         validateNumbersIsGreaterThanZero([price, quantity], res, next, ["Sorry, Please Send Valid Product Price ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Discount ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Quantity ( Number Must Be Greater Than Zero ) !!"]);
