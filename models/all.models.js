@@ -707,6 +707,23 @@ const couponSchema = new mongoose.Schema({
 
 const couponModel = mongoose.model("coupon", couponSchema);
 
+// Create Previous Project Schema
+
+const previousProjectSchema = new mongoose.Schema({
+    imagePath: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+});
+
+// Create Previous Project Model From Previous Project Schema
+
+const previousProjectModel = mongoose.model("previous_projects", previousProjectSchema);
+
 module.exports = {
     mongoose,
     adminModel,
@@ -723,5 +740,6 @@ module.exports = {
     productsWalletModel,
     productsRatingModel,
     adModel,
-    couponModel
+    couponModel,
+    previousProjectModel
 }

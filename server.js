@@ -99,6 +99,8 @@ app.listen(PORT, async () => {
     app.use("/ads", require("./routes/ads.router"));
 
     app.use("/coupons", require("./routes/coupons.router"));
+    
+    app.use("/previous-projects", require("./routes/previous_projects.router"));
 
     /* End Handle The Routes */
 });
