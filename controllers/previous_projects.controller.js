@@ -1,4 +1,4 @@
-const { getResponseObject, handleResizeImagesAndConvertFormatToWebp } = require("../global/functions");
+const { getResponseObject, handleResizeImagesAndConvertFormatToWebp, getSuitableTranslations } = require("../global/functions");
 
 const previousProjectsManagmentFunctions = require("../models/previous_projects.model");
 

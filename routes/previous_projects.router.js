@@ -8,7 +8,7 @@ const { validateIsExistValueForFieldsAndDataTypes } = require("../global/functio
 
 const multer = require("multer");
 
-previousProjectsRouter.post("/add-new-previous-project",
+previousProjectsRouter.post("/add-new-project",
     validateJWT,
     multer({
         storage: multer.memoryStorage(),
