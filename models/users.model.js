@@ -84,7 +84,6 @@ async function loginByGoogle(userInfo, language) {
             email: userInfo.email,
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
-            previewName: userInfo.previewName,
             password: await hash(process.env.secretKey, 10),
             isVerified: true,
             provider: "google",
@@ -250,7 +249,7 @@ async function updateUserInfo(userId, newUserData, language) {
         if (userInfo) {
             let newUserInfo = newUserData;
             if (newUserData.password && newUserData.newPassword) {
-                if (!await compare(newUserData.password, userInfo.password)) {
+                if (!(await compare(newUserData.password, userInfo.password))) {
                     return {
                         msg: getSuitableTranslations("Sorry, This Password Is Uncorrect !!", language),
                         error: true,

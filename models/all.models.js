@@ -123,10 +123,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    previewName: {
-        type: String,
-        default: "",
-    },
     billingAddress: {
         firstName: {
             type: String,
@@ -142,7 +138,7 @@ const userSchema = new mongoose.Schema({
         },
         country: {
             type: String,
-            default: "KW",
+            default: "GE",
         },
         streetAddress: {
             type: String,
