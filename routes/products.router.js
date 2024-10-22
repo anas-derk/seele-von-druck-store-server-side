@@ -102,7 +102,7 @@ productsRouter.get("/product-info/:productId",
 
 productsRouter.get("/products-count",
     (req, res, next) => {
-        const { storeId, categoryId, name } = req.query;
+        const { categoryId, name } = req.query;
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Category Id", fieldValue: categoryId, dataType: "ObjectId", isRequiredValue: false },
             { fieldName: "Product Name", fieldValue: name, dataType: "string", isRequiredValue: false },
