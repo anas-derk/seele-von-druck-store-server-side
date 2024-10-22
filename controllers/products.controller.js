@@ -109,7 +109,8 @@ async function getAllFlashProductsInsideThePage(req, res) {
         const filtersAndSortDetailsObject = getFiltersAndSortDetailsObject(queryObject);
         let sortDetailsObject = {};
         if (filtersAndSortDetailsObject.sortDetailsObject) {
-            sortDetailsObject[filtersAndSortDetailsObject.sortDetailsObject.sortBy] = Number(filtersAndSortDetailsObject.sortDetailsObject.sortType);
+            sortDetailsObject[filtersAndSortDetailsObject.sortDetailsObject.sortBy] = Number(filtersAndSortDetailsObject.sortDetailsObject.sortBy);
+            sortDetailsObject[filtersAndSortDetailsObject.sortDetailsObject.sortType] = Number(filtersAndSortDetailsObject.sortDetailsObject.sortType);
         }
         res.json(await productsManagmentFunctions.getAllFlashProductsInsideThePage(queryObject.pageNumber, queryObject.pageSize, filtersAndSortDetailsObject.filtersObject, sortDetailsObject, queryObject.language));
     }

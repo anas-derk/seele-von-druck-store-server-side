@@ -118,7 +118,7 @@ function validateSortMethod(sortBy, res, nextFunc, errorMsg = "Sorry, Please Sen
 }
 
 function validateSortType(sortType, res, nextFunc, errorMsg = "Sorry, Please Send Valid Sort Type ( '-1' For Descending Sort Or '1' For Ascending Sort ) !!") {
-    if (!["postOfDate", "price"].includes(sortType)) {
+    if (!["1", "-1"].includes(sortType)) {
         res.status(400).json(getResponseObject(errorMsg, true, {}));
         return;
     }
