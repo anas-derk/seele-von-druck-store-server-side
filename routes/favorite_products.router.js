@@ -2,7 +2,7 @@ const favoriteProductsRouter = require("express").Router();
 
 const favoriteProductsController = require("../controllers/favorite_products.controller");
 
-const { validateJWT } = require("../middlewares/global.middlewares");
+const { validateJWT, validateNumbersIsGreaterThanZero, validateNumbersIsNotFloat } = require("../middlewares/global.middlewares");
 
 const { validateIsExistValueForFieldsAndDataTypes } = require("../global/functions");
 
@@ -19,9 +19,17 @@ favoriteProductsRouter.post("/add-new-favorite-product/:productId",
 favoriteProductsRouter.post("/favorite-products-by-products-ids-and-user-id",
     validateJWT,
     (req, res, next) => {
-        validateIsExistValueForFieldsAndDataTypes(req.body.productsIds.map((productId, index) => (
-            { fieldName: `Id In Product ${index + 1}`, fieldValue: productId, dataType: "ObjectId", isRequiredValue: true }
-        )), res, next);
+        validateIsExistValueForFieldsAndDataTypes([
+            { fieldName: "Products By Ids", fieldValue: req.body.productsIds, dataType: "array", isRequiredValue: true }
+        ],
+        res, next);
+    },
+    (req, res, next) => {
+        validateIsExistValueForFieldsAndDataTypes(
+            req.body.productsIds.map((productId, index) => (
+                { fieldName: `Id In Product ${index + 1}`, fieldValue: productId, dataType: "ObjectId", isRequiredValue: true }
+            )),
+        res, next);
     },
     favoriteProductsController.getFavoriteProductsByProductsIdsAndUserId
 );
@@ -37,6 +45,8 @@ favoriteProductsRouter.get("/all-favorite-products-inside-the-page",
             { fieldName: "page Size", fieldValue: Number(pageSize), dataType: "number", isRequiredValue: true },
         ], res, next);
     },
+    (req, res, next) => validateNumbersIsGreaterThanZero([req.query.pageNumber, req.query.pageSize], res, next, ["Sorry, Please Send Valid Page Number ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Page Size ( Number Must Be Greater Than Zero ) !!"]),
+    (req, res, next) => validateNumbersIsNotFloat([req.query.pageNumber, req.query.pageSize], res, next, ["Sorry, Please Send Valid Page Number ( Number Must Be Not Float ) !!", "Sorry, Please Send Valid Page Size ( Number Must Be Not Float ) !!"]),
     favoriteProductsController.getAllFavoriteProductsInsideThePage
 );
 
