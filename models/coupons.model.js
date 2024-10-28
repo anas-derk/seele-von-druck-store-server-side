@@ -11,7 +11,7 @@ async function getAllCoupons(admintId, language) {
             return {
                 msg: getSuitableTranslations("Get All Coupons Process Has Been Successfully !!", language),
                 error: false,
-                data: await couponModel.find({ storeId: admin.storeId }),
+                data: await couponModel.find(),
             }
         }
         return {

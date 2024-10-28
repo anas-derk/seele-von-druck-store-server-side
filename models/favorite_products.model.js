@@ -66,7 +66,10 @@ async function getAllFavoriteProductsInsideThePage(pageNumber, pageSize, filters
         return {
             msg: getSuitableTranslations("Get All Favorite Products For This User Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
             error: false,
-            data: await favoriteProductModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize),
+            data: {
+                favoriteProductsCount: await favoriteProductModel.countDocuments(filters),
+                favoriteProducts: await favoriteProductModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
+            },
         }
     }
     catch (err) {

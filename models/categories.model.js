@@ -88,7 +88,10 @@ async function getAllCategoriesInsideThePage(pageNumber, pageSize, filters, lang
         return {
             msg: getSuitableTranslations("Get All Categories Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
             error: false,
-            data: await categoryModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize),
+            data: {
+                categoriesCount: await categoryModel.countDocuments(filters),
+                categories: await categoryModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
+            },
         }
     }
     catch (err) {

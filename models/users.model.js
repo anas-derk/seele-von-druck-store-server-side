@@ -184,7 +184,10 @@ async function getAllUsersInsideThePage(authorizationId, pageNumber, pageSize, f
                 return {
                     msg: getSuitableTranslations("Get All Users Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
                     error: false,
-                    data: await userModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize).sort({ dateOfCreation: -1 }),
+                    data: {
+                        usersCount: await userModel.countDocuments(filters),
+                        users: await userModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize).sort({ dateOfCreation: -1 })
+                    },
                 }
             }
             return {

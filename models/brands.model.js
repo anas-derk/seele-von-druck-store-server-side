@@ -57,7 +57,10 @@ async function getAllBrandsInsideThePage(pageNumber, pageSize, filters, language
         return {
             msg: getSuitableTranslations("Get All Brands Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
             error: false,
-            data: await brandModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize),
+            data: {
+                brandsCount: await brandModel.countDocuments(filters),
+                brands: await brandModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
+            },
         };
     }
     catch (err) {

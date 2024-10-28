@@ -22,7 +22,10 @@ async function getAllWalletProductsInsideThePage(pageNumber, pageSize, filters, 
         return {
             msg: getSuitableTranslations("Get All Products Inside The Wallet For This User The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
             error: false,
-            data: await productsWalletModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize),
+            data: {
+                walletProductsCount: await productsWalletModel.countDocuments(filters),
+                walletProducts: await productsWalletModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
+            },
         }
     }
     catch (err) {

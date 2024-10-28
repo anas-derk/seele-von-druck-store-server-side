@@ -44,7 +44,10 @@ async function getAllPreviousProjectsInsideThePage(pageNumber, pageSize, filters
         return {
             msg: getSuitableTranslations("Get All Previous Projects Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
             error: false,
-            data: await previousProjectModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize),
+            data: {
+                previousProjectsCount: await previousProjectModel.countDocuments(filters),
+                previousProducts: await previousProjectModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
+            },
         };
     }
     catch (err) {

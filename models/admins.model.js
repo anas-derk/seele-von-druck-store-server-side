@@ -93,7 +93,10 @@ async function getAllAdminsInsideThePage(superAdminId, pageNumber, pageSize, fil
                 return {
                     msg: getSuitableTranslations("Get All Admins Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
                     error: false,
-                    data: await adminModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize).sort({ creatingDate: -1 }),
+                    data: {
+                        adminsCount: await adminModel.countDocuments(filters),
+                        admins: await adminModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize).sort({ creatingDate: -1 })
+                    },
                 }
             }
             return {
