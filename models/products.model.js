@@ -157,7 +157,7 @@ async function getAllFlashProductsInsideThePage(pageNumber, pageSize, filters, s
             msg: getSuitableTranslations("Get All Flash Products Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
             error: false,
             data: {
-                productsCount: await productModel.countDocuments(),
+                productsCount: await productModel.countDocuments(filters),
                 products: await productModel
                             .find(filters)
                             .skip((pageNumber - 1) * pageSize)
