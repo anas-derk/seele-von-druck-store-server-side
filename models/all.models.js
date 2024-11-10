@@ -50,8 +50,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    categoryId: {
-        type: String,
+    category: {
+        type: mongoose.Types.ObjectId,
+        ref: "categorie",
         required: true,
     },
     discount: {
@@ -273,7 +274,7 @@ const categorySchema = new mongoose.Schema({
 
 // Create Category Model From Category Schema
 
-const categoryModel = mongoose.model("category", categorySchema);
+const categoryModel = mongoose.model("categorie", categorySchema);
 
 // Create Order Schema
 

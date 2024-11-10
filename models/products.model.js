@@ -8,11 +8,10 @@ async function addNewProduct(authorizationId, productInfo, language) {
     try {
         const admin = await adminModel.findById(authorizationId);
         if (admin){
-            const product = await productModel.findOne({ name: productInfo.name, categoryId: productInfo.categoryId });
+            const product = await productModel.findOne({ name: productInfo.name, category: productInfo.category });
             if (!product) {
-                const category = await categoryModel.findById(productInfo.categoryId);
+                const category = await categoryModel.findById(productInfo.category);
                 if (category) {
-                    productInfo.category = category.name;
                     await (new productModel(productInfo)).save();
                     return {
                         msg: getSuitableTranslations("Adding New Product Process Has Been Successfuly !!", language),

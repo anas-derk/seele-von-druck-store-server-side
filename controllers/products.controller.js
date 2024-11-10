@@ -14,7 +14,7 @@ async function postNewProduct(req, res) {
         });
         await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
         const productInfo = {
-            ...{ name, price, description, categoryId, discount, quantity } = Object.assign({}, req.body),
+            ...{ name, price, description, category, discount, quantity } = Object.assign({}, req.body),
             imagePath: outputImageFilePaths[0],
             galleryImagesPaths: outputImageFilePaths.slice(1),
         };
