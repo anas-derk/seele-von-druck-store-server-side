@@ -102,6 +102,8 @@ app.listen(PORT, async () => {
     
     app.use("/previous-projects", require("./routes/previous_projects.router"));
 
+    app.use("/templates", require("./routes/templates.router"));
+
     /* End Handle The Routes */
 });
 

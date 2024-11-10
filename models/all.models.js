@@ -719,6 +719,23 @@ const previousProjectSchema = new mongoose.Schema({
 
 const previousProjectModel = mongoose.model("previous_projects", previousProjectSchema);
 
+// Create Template Schema
+
+const templateSchema = new mongoose.Schema({
+    imagePath: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+});
+
+// Create Template Model From Template Schema
+
+const templateModel = mongoose.model("template", templateSchema);
+
 module.exports = {
     mongoose,
     adminModel,
@@ -736,5 +753,6 @@ module.exports = {
     productsRatingModel,
     adModel,
     couponModel,
-    previousProjectModel
+    previousProjectModel,
+    templateModel
 }
