@@ -4,7 +4,7 @@ const { categoryModel, adminModel, productModel } = require("../models/all.model
 
 const { getSuitableTranslations } = require("../global/functions");
 
-async function addNewCategory(authorizationId, categoryName, language) {
+async function addNewCategory(authorizationId, categoryName, template, language) {
     try{
         const admin = await adminModel.findById(authorizationId);
         if (admin){
@@ -18,6 +18,7 @@ async function addNewCategory(authorizationId, categoryName, language) {
             }
             await (new categoryModel({
                 name: categoryName,
+                template,
             })).save();
             return {
                 msg: getSuitableTranslations("Adding New Category Process Has Been Successfuly !!", language),

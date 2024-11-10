@@ -270,6 +270,12 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    template: {
+        type: mongoose.Types.ObjectId,
+        ref: "template",
+        default: "",
+        enum: ["Flex", "Panner", "Bussiness Card"]
+    },
 });
 
 // Create Category Model From Category Schema
