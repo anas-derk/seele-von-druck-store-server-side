@@ -15,6 +15,20 @@ async function getAllTemplates(req, res) {
     }
 }
 
+async function putTemplate(req, res) {
+    try{
+        const result = await templatesOPerationsManagmentFunctions.updateTemplate(req.data._id, req.params.templateId, req.body.components, req.query.language);
+        if (result.error) {
+            return res.status(401).json(result);
+        }
+        res.json(result);
+    }
+    catch(err) {
+        res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
+    }
+}
+
 module.exports = {
-    getAllTemplates
+    getAllTemplates,
+    putTemplate
 }

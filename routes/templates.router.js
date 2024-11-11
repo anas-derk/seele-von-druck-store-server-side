@@ -6,4 +6,6 @@ const { validateJWT } = require("../middlewares/global.middlewares");
 
 templatesRouter.get("/all-templates", validateJWT, templatesController.getAllTemplates);
 
+templatesRouter.put("/:templateId", validateJWT, templatesController.putTemplate);
+
 module.exports = templatesRouter;
