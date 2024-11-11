@@ -722,12 +722,12 @@ const previousProjectModel = mongoose.model("previous_projects", previousProject
 // Create Template Schema
 
 const templateSchema = new mongoose.Schema({
-    imagePath: {
+    name: {
         type: String,
         required: true,
     },
-    description: {
-        type: String,
+    components: {
+        type: Object,
         required: true,
     },
 });
