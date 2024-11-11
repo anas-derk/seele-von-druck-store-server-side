@@ -273,7 +273,7 @@ const categorySchema = new mongoose.Schema({
     template: {
         type: mongoose.Types.ObjectId,
         ref: "template",
-        default: "",
+        default: null,
         enum: ["Flex", "Panner", "Bussiness Card"]
     },
 });

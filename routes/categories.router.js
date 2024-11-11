@@ -12,7 +12,7 @@ categoriesRouter.post("/add-new-category",
         const { categoryName, template } = req.body;
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Category Name", fieldValue: categoryName, dataType: "string", isRequiredValue: true },
-            { fieldName: "Template", fieldValue: template, dataType: "ObjectId", isRequiredValue: true },
+            { fieldName: "Template", fieldValue: template, dataType: "ObjectId", isRequiredValue: false },
         ], res, next);
     },
     categoriesController.postNewCategory
