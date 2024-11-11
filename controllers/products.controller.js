@@ -202,7 +202,7 @@ async function deleteImageFromProductGallery(req, res) {
 
 async function putProduct(req, res) {
     try {
-        const result = await productsManagmentFunctions.updateProduct(req.data._id, req.params.productId, { name, price, quantity, country, description, description, categoryId, discount, startDiscountPeriod, endDiscountPeriod, discountInOfferPeriod, offerDescription } = req.body, req.query.language);
+        const result = await productsManagmentFunctions.updateProduct(req.data._id, req.params.productId, { name, price, quantity, country, description, category, discount, tax, startDiscountPeriod, endDiscountPeriod, discountInOfferPeriod, offerDescription } = req.body, req.query.language);
         if (result.error) {
             if (result.msg === "Sorry, This Admin Is Not Exist !!") {
                 return res.status(401).json(result);
