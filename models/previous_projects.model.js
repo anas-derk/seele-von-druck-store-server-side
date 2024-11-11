@@ -46,7 +46,7 @@ async function getAllPreviousProjectsInsideThePage(pageNumber, pageSize, filters
             error: false,
             data: {
                 previousProjectsCount: await previousProjectModel.countDocuments(filters),
-                previousProducts: await previousProjectModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
+                previousProjects: await previousProjectModel.find(filters).skip((pageNumber - 1) * pageSize).limit(pageSize)
             },
         };
     }
