@@ -15,7 +15,7 @@ async function postNewProduct(req, res) {
         });
         await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
         const productInfo = {
-            ...{ name, price, description, category, discount, quantity } = Object.assign({}, req.body),
+            ...{ name, price, description, category, discount, tax, quantity } = Object.assign({}, req.body),
             imagePath: outputImageFilePaths[0],
             galleryImagesPaths: outputImageFilePaths.slice(1),
         };
@@ -32,7 +32,6 @@ async function postNewProduct(req, res) {
         res.json(result);
     }
     catch (err) {
-        console.log(err)
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }

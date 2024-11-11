@@ -33,19 +33,20 @@ productsRouter.post("/add-new-product",
     ]),
     validateIsExistErrorInFiles,
     (req, res, next) => {
-        const { name, price, description, category, discount, quantity } = Object.assign({}, req.body);
+        const { name, price, description, category, discount, tax, quantity } = Object.assign({}, req.body);
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Name", fieldValue: name, dataType: "string", isRequiredValue: true },
             { fieldName: "Price", fieldValue: Number(price), dataType: "number", isRequiredValue: true },
             { fieldName: "Description", fieldValue: description, dataType: "string", isRequiredValue: true },
             { fieldName: "Category Id", fieldValue: category, dataType: "ObjectId", isRequiredValue: true },
             { fieldName: "discount", fieldValue: Number(discount), dataType: "number", isRequiredValue: discount < 0 },
+            { fieldName: "tax", fieldValue: Number(tax), dataType: "number", isRequiredValue: tax < 0 },
             { fieldName: "quantity", fieldValue: Number(quantity), dataType: "number", isRequiredValue: true },
         ], res, next);
     },
     (req, res, next) => {
-        const { price, quantity } = Object.assign({}, req.body);
-        validateNumbersIsGreaterThanZero([price, quantity], res, next, ["Sorry, Please Send Valid Product Price ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Discount ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Quantity ( Number Must Be Greater Than Zero ) !!"]);
+        const { price, quantity, tax } = Object.assign({}, req.body);
+        validateNumbersIsGreaterThanZero([price, quantity, tax], res, next, ["Sorry, Please Send Valid Product Price ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Discount ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Quantity ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Tax ( Number Must Be Greater Than Zero ) !!"]);
     },
     (req, res, next) => validateNumbersIsNotFloat([(Object.assign({}, req.body)).quantity], res, next, [], "Sorry, Please Send Valid Product Quantity !!"),
     productsController.postNewProduct
