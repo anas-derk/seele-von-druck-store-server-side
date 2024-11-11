@@ -315,9 +315,6 @@ async function updateProduct(authorizationId, productId, newData, language) {
             if (category) {
                 newData.category = category.name;
             }
-            else {
-                newData.category = "uncategorized";
-            }
             const product = await productModel.findOneAndUpdate({ _id: productId }, newData);
             if (product) {
                 return {

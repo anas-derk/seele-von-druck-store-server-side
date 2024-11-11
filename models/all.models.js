@@ -53,7 +53,7 @@ const productSchema = new mongoose.Schema({
     category: {
         type: mongoose.Types.ObjectId,
         ref: "categorie",
-        required: true,
+        default: null
     },
     discount: {
         type: Number,
