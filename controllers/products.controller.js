@@ -8,6 +8,7 @@ async function postNewProduct(req, res) {
     try {
         const productImages = Object.assign({}, req.files);
         let files = [productImages.productImage[0].buffer], outputImageFilePaths = [`assets/images/products/${Math.random()}_${Date.now()}__${productImages.productImage[0].originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`];
+        console.log(productImages)
         productImages.galleryImages.forEach((file) => {
             files.push(file.buffer);
             outputImageFilePaths.push(`assets/images/products/${Math.random()}_${Date.now()}__${file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`)
@@ -31,6 +32,7 @@ async function postNewProduct(req, res) {
         res.json(result);
     }
     catch (err) {
+        console.log(err)
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }

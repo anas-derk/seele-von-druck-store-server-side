@@ -177,7 +177,10 @@ async function getAllProductsInsideThePage(pageNumber, pageSize, filters, sortDe
             error: false,
             data: {
                 productsCount: await productModel.countDocuments(),
-                products: await productModel.find(filters).sort(sortDetailsObject).skip((pageNumber - 1) * pageSize).limit(pageSize),
+                products: await productModel.find(filters).sort(sortDetailsObject).skip((pageNumber - 1) * pageSize).limit(pageSize).populate({
+                    path: "category",
+                    populate: { path: "template" }
+                }),
                 currentDate: new Date()
             },
         }
