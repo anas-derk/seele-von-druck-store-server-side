@@ -8,22 +8,17 @@ async function postNewProduct(req, res) {
     try {
         const productImages = Object.assign({}, req.files);
         let files = [productImages.productImage[0].buffer], outputImageFilePaths = [`assets/images/products/${Math.random()}_${Date.now()}__${productImages.productImage[0].originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`];
-        console.log(productImages)
         productImages.galleryImages.forEach((file) => {
             files.push(file.buffer);
             outputImageFilePaths.push(`assets/images/products/${Math.random()}_${Date.now()}__${file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`)
         });
         await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
-        const productInfo = {
+        const { language } = req.query;
+        const result = await productsManagmentFunctions.addNewProduct(req.data._id, {
             ...{ name, price, description, category, discount, tax, quantity } = Object.assign({}, req.body),
             imagePath: outputImageFilePaths[0],
             galleryImagesPaths: outputImageFilePaths.slice(1),
-        };
-        const { language } = req.query;
-        if(Number(productInfo.discount) < 0 || Number(productInfo.discount) > Number(productInfo.price)) {
-            return res.status(400).json(getResponseObject(getSuitableTranslations("Sorry, Please Send Valid Discount Value !!", language), true, {}));
-        }
-        const result = await productsManagmentFunctions.addNewProduct(req.data._id, productInfo, language);
+        }, language);
         if (result.error) {
             if (result.msg === "Sorry, This Admin Is Not Exist !!") {
                 return res.status(401).json(result);

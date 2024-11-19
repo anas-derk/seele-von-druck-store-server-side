@@ -4,7 +4,7 @@ const productsController = require("../controllers/products.controller");
 
 const multer = require("multer");
 
-const { validateJWT, validateNumbersIsGreaterThanZero, validateNumbersIsNotFloat, validateSortMethod, validateSortType, validateIsExistErrorInFiles } = require("../middlewares/global.middlewares");
+const { validateJWT, validateNumbersIsGreaterThanZero, validateNumbersIsNotFloat, validateSortMethod, validateSortType, validateIsExistErrorInFiles, validateIsPriceGreaterThanDiscount } = require("../middlewares/global.middlewares");
 
 const { validateIsExistValueForFieldsAndDataTypes } = require("../global/functions");
 
@@ -49,6 +49,10 @@ productsRouter.post("/add-new-product",
         validateNumbersIsGreaterThanZero([price, quantity, tax], res, next, ["Sorry, Please Send Valid Product Price ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Discount ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Quantity ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Tax ( Number Must Be Greater Than Zero ) !!"]);
     },
     (req, res, next) => validateNumbersIsNotFloat([(Object.assign({}, req.body)).quantity], res, next, [], "Sorry, Please Send Valid Product Quantity !!"),
+    (req, res, next) => {
+        const { price, discount } = Object.assign({}, req.body);
+        validateIsPriceGreaterThanDiscount(price, discount, res, next);
+    },
     productsController.postNewProduct
 );
 

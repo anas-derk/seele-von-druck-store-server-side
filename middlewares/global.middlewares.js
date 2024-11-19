@@ -188,6 +188,13 @@ function validateOrderStatus(status, res, nextFunc){
     nextFunc();
 }
 
+function validateIsPriceGreaterThanDiscount(price, discount, res, next) {
+    if (Number(discount) > Number(price)) {
+        return res.status(400).json(getResponseObject("Sorry, Please Send Valid Price And / Or Discount Value ( Must Be Price Greater Than Discount ) !!", true, {}));
+    }
+    next();
+}
+
 function keyGeneratorForRequestsRateLimit(req) {
     const ipAddress = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
     const ipWithoutPort = ipAddress.split(',')[0];
@@ -216,5 +223,6 @@ module.exports = {
     validateOrderCreator,
     validatePaymentGateway,
     validateOrderStatus,
+    validateIsPriceGreaterThanDiscount,
     keyGeneratorForRequestsRateLimit,
 }
