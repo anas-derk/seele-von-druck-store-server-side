@@ -1,6 +1,6 @@
 // Import Product Model Object
 
-const { productModel, categoryModel, adminModel, mongoose } = require("../models/all.models");
+const { productModel, categoryModel, adminModel, templateModel, mongoose } = require("../models/all.models");
 
 const { getSuitableTranslations } = require("../global/functions");
 
@@ -10,6 +10,15 @@ async function addNewProduct(authorizationId, productInfo, language) {
         if (admin){
             const product = await productModel.findOne({ name: productInfo.name, category: productInfo.category });
             if (!product) {
+                if (product.template) {
+                    if (!(await templateModel.findById(product.template))) {
+                        return {
+                            msg: getSuitableTranslations("Sorry, This Template Is Not Exist !!", language),
+                            error: true,
+                            data: {},
+                        }
+                    }
+                }
                 const category = await categoryModel.findById(productInfo.category);
                 if (category) {
                     await (new productModel(productInfo)).save();

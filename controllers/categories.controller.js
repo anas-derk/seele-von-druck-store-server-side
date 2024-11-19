@@ -12,8 +12,8 @@ function getFiltersObject(filters) {
 
 async function postNewCategory(req, res) {
     try{
-        const { categoryName, template } = req.body;
-        const result = await categoriesManagmentFunctions.addNewCategory(req.data._id, categoryName, template, req.query.language);
+        const { categoryName } = req.body;
+        const result = await categoriesManagmentFunctions.addNewCategory(req.data._id, categoryName, req.query.language);
         if (result.error) {
             if (result.msg === "Sorry, This Admin Is Not Exist !!") {
                 return res.status(401).json(result);

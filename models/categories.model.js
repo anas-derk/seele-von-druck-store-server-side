@@ -1,10 +1,10 @@
 // Import Category And Admin Model Object
 
-const { categoryModel, adminModel, productModel, templateModel } = require("../models/all.models");
+const { categoryModel, adminModel, productModel } = require("../models/all.models");
 
 const { getSuitableTranslations } = require("../global/functions");
 
-async function addNewCategory(authorizationId, categoryName, template, language) {
+async function addNewCategory(authorizationId, categoryName, language) {
     try{
         const admin = await adminModel.findById(authorizationId);
         if (admin){
@@ -16,18 +16,8 @@ async function addNewCategory(authorizationId, categoryName, template, language)
                     data: {},
                 }
             }
-            if (template) {
-                if (!(await templateModel.findById(template))) {
-                    return {
-                        msg: getSuitableTranslations("Sorry, This Template Is Not Exist !!", language),
-                        error: true,
-                        data: {},
-                    }
-                }
-            }
             await (new categoryModel({
                 name: categoryName,
-                template,
             })).save();
             return {
                 msg: getSuitableTranslations("Adding New Category Process Has Been Successfuly !!", language),

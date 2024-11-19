@@ -50,6 +50,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    template: {
+        type: mongoose.Types.ObjectId,
+        ref: "template",
+        default: null,
+        enum: ["Flex", "Panner", "Bussiness Card"]
+    },
     category: {
         type: mongoose.Types.ObjectId,
         ref: "categorie",
@@ -273,12 +279,6 @@ const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-    },
-    template: {
-        type: mongoose.Types.ObjectId,
-        ref: "template",
-        default: null,
-        enum: ["Flex", "Panner", "Bussiness Card"]
     },
 });
 
