@@ -740,6 +740,25 @@ const templateSchema = new mongoose.Schema({
 
 const templateModel = mongoose.model("template", templateSchema);
 
+// Create Cart Schema
+
+const cartSchema = new mongoose.Schema({
+    product: {
+        type: mongoose.Types.ObjectId,
+        ref: "product",
+        required: true,
+    },
+    quantity: {
+        type: Number,
+        default: 1,
+    },
+});
+
+// Create Cart Model From Cart Schema
+
+const cartModel = mongoose.model("cart", cartSchema);
+
+
 module.exports = {
     mongoose,
     adminModel,
@@ -758,5 +777,6 @@ module.exports = {
     adModel,
     couponModel,
     previousProjectModel,
-    templateModel
+    templateModel,
+    cartModel
 }
