@@ -93,10 +93,7 @@ async function getProductsByIds(productsIds, language) {
             msg: getSuitableTranslations("Get Products By Ids Process Has Been Successfully !!", language),
             error: false,
             data: {
-                products: await productModel.find({ _id: { $in: productsIds }, quantity: { $gte: 1 } }).populate({
-                    path: "category",
-                    populate: { path: "template" }
-                }),
+                products: await productModel.find({ _id: { $in: productsIds }, quantity: { $gte: 1 } }).populate("template"),
                 currentDate: new Date(),
             },
         }
@@ -108,10 +105,7 @@ async function getProductsByIds(productsIds, language) {
 
 async function getProductInfo(productId, language) {
     try {
-        const productInfo = await productModel.findById(productId).populate({
-            path: "category",
-            populate: { path: "template" }
-        });
+        const productInfo = await productModel.findById(productId).populate("template");
         if (productInfo) {
             return {
                 msg: getSuitableTranslations("Get Product Info Process Has Been Successfuly !!", language),
@@ -176,10 +170,7 @@ async function getAllFlashProductsInsideThePage(pageNumber, pageSize, filters, s
                             .find(filters)
                             .skip((pageNumber - 1) * pageSize)
                             .limit(pageSize).sort(sortDetailsObject)
-                            .populate({
-                                path: "category",
-                                populate: { path: "template" }
-                            }),
+                            .populate("template"),
                 currentDate: new Date(),
             },
         }
@@ -196,10 +187,7 @@ async function getAllProductsInsideThePage(pageNumber, pageSize, filters, sortDe
             error: false,
             data: {
                 productsCount: await productModel.countDocuments(),
-                products: await productModel.find(filters).sort(sortDetailsObject).skip((pageNumber - 1) * pageSize).limit(pageSize).populate({
-                    path: "category",
-                    populate: { path: "template" }
-                }),
+                products: await productModel.find(filters).sort(sortDetailsObject).skip((pageNumber - 1) * pageSize).limit(pageSize).populate("template"),
                 currentDate: new Date()
             },
         }
@@ -220,10 +208,7 @@ async function getRelatedProductsInTheProduct(productId, language) {
                     { $match: { categoryId: productInfo.categoryId, _id: { $ne: new mongoose.Types.ObjectId(productId) } } },
                     { $sample: { size: 10 } }
                 ])
-                .populate({
-                    path: "category",
-                    populate: { path: "template" }
-                }),
+                .populate("template"),
             }
         }
         return {

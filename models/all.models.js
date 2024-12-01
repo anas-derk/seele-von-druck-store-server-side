@@ -54,7 +54,6 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "template",
         default: null,
-        enum: ["Flex", "Panner", "Bussiness Card"]
     },
     category: {
         type: mongoose.Types.ObjectId,
