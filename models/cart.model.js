@@ -19,7 +19,7 @@ async function addNewProduct(authorizationId, productInfo, language) {
                 }
                 await (new cartModel(productInfo)).save();
                 return {
-                    msg: getSuitableTranslations("Adding New Product Process Has Been Successfuly !!", language),
+                    msg: getSuitableTranslations("Adding New Product To Cart For This User Process Has Been Successfuly !!", language),
                     error: false,
                     data: {},
                 }
@@ -46,7 +46,7 @@ async function getAllProducts(authorizationId, language) {
         const userInfo = await userModel.findById(authorizationId);
         if (userInfo){
             return {
-                msg: getSuitableTranslations("Get All Products Inside The Cart Process Has Been Successfully !!", language),
+                msg: getSuitableTranslations("Get All Products Inside The Cart For This User Process Has Been Successfully !!", language),
                 error: false,
                 data: await cartModel.find({ userId: authorizationId }).populate("product"),
             }
@@ -69,7 +69,7 @@ async function deleteProduct(authorizationId, productId, language) {
             const product = await cartModel.findOneAndDelete({ product: productId });
             if (product) {
                 return {
-                    msg: getSuitableTranslations("Deleting Product From User Cart Process Has Been Successfuly !!", language),
+                    msg: getSuitableTranslations("Deleting Product From Cart For This User Process Has Been Successfuly !!", language),
                     error: false,
                     data: {
                         designFiles: product.designFiles,
@@ -100,7 +100,7 @@ async function updateProduct(authorizationId, productId, newData, language) {
             const product = await cartModel.findOneAndUpdate({ product: productId }, newData);
             if (product) {
                 return {
-                    msg: getSuitableTranslations("Updating Product Info Inside The Cart Process Has Been Successfully !!", language),
+                    msg: getSuitableTranslations("Updating Product Info Inside The Cart For This User Process Has Been Successfully !!", language),
                     error: false,
                     data: {},
                 }

@@ -136,5 +136,10 @@
     "Deleting User Process Has Been Successfully !!": "Kullanıcıyı silme işlemi başarıyla tamamlandı!!",
     "Internal Server Error !!": "Dahili sunucu hatası!!",
     "Creating New Payment Order By Tap Process Has Been Successfully !!": "Tap üzerinden yeni bir ödeme siparişi oluşturma işlemi başarıyla tamamlandı!!",
-    "Sorry, Please Send Valid Discount Value !!":"Üzgöz, lütfen geçerli bir indirim değeri gönderin!!"
+    "Sorry, Please Send Valid Discount Value !!":"Üzgöz, lütfen geçerli bir indirim değeri gönderin!!",
+    "Sorry, This Product Is Already Exist Inside The Cart For This User !!": "Üzgünüz, bu ürün zaten bu kullanıcının sepetinde mevcut!!",
+    "Adding New Product To Cart For This User Process Has Been Successfuly !!": "Bu kullanıcı için sepete yeni ürün ekleme işlemi başarıyla tamamlandı!!",
+    "Get All Products Inside The Cart For This User Process Has Been Successfully !!": "Bu kullanıcı için sepetteki tüm ürünler başarıyla getirildi!!",
+    "Deleting Product From Cart For This User Process Has Been Successfuly !!": "Bu kullanıcı için sepetteki ürün silme işlemi başarıyla tamamlandı!!",
+    "Updating Product Info Inside The Cart For This User Process Has Been Successfully !!": "Bu kullanıcı için sepetteki ürün bilgilerini güncelleme işlemi başarıyla tamamlandı!!"
 }

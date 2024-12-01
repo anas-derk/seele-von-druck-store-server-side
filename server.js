@@ -104,6 +104,8 @@ app.listen(PORT, async () => {
 
     app.use("/templates", require("./routes/templates.router"));
 
+    app.use("/cart", require("./routes/cart.router"));
+
     /* End Handle The Routes */
 });
 
