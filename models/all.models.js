@@ -99,6 +99,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isStockDisplayed: {
+        type: Boolean,
+        default: false,
+    },
     galleryImagesPaths: Array,
     startDiscountPeriod: Date,
     endDiscountPeriod: Date,
