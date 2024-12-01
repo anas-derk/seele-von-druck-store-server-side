@@ -51,19 +51,20 @@ async function addNewProduct(authorizationId, productInfo, language) {
     }
 }
 
-async function getAllProductsInsideTheCart(pageNumber, pageSize, filters, sortDetailsObject, language) {
+async function getAllProducts(authorizationId, language) {
     try {
+        const userInfo = await userModel.findById(authorizationId);
+        if (userInfo){
+            return {
+                msg: getSuitableTranslations("Get All Products Inside The Cart Process Has Been Successfully !!", language),
+                error: false,
+                data: await cartModel.find({ userId: authorizationId }).populate("product"),
+            }
+        }
         return {
-            msg: getSuitableTranslations("Get All Products Inside The Page: {{pageNumber}} Process Has Been Successfully !!", language, { pageNumber }),
-            error: false,
-            data: {
-                productsCount: await productModel.countDocuments(),
-                products: await productModel.find(filters).sort(sortDetailsObject).skip((pageNumber - 1) * pageSize).limit(pageSize).populate({
-                    path: "category",
-                    populate: { path: "template" }
-                }),
-                currentDate: new Date()
-            },
+            msg: getSuitableTranslations("Sorry, This User Is Not Exist !!", language),
+            error: true,
+            data: {},
         }
     }
     catch (err) {
@@ -73,18 +74,15 @@ async function getAllProductsInsideTheCart(pageNumber, pageSize, filters, sortDe
 
 async function deleteProduct(authorizationId, productId, language) {
     try {
-        const admin = await adminModel.findById(authorizationId);
-        if (admin){
-            const productInfo = await productModel.findOneAndDelete({
-                _id: productId,
-            });
-            if (productInfo) {
+        const userInfo = await userModel.findById(authorizationId);
+        if (userInfo){
+            const product = await cartModel.findOneAndDelete({ product: productId });
+            if (product) {
                 return {
-                    msg: getSuitableTranslations("Deleting Product Process Has Been Successfuly !!", language),
+                    msg: getSuitableTranslations("Deleting Product From User Cart Process Has Been Successfuly !!", language),
                     error: false,
                     data: {
-                        deletedProductImagePath: productInfo.imagePath,
-                        galleryImagePathsForDeletedProduct: productInfo.galleryImagesPaths,
+                        designFiles: product.designFiles,
                     },
                 }
             }
@@ -95,7 +93,7 @@ async function deleteProduct(authorizationId, productId, language) {
             }
         }
         return {
-            msg: getSuitableTranslations("Sorry, This Admin Is Not Exist !!", language),
+            msg: getSuitableTranslations("Sorry, This User Is Not Exist !!", language),
             error: true,
             data: {},
         }
@@ -107,16 +105,12 @@ async function deleteProduct(authorizationId, productId, language) {
 
 async function updateProduct(authorizationId, productId, newData, language) {
     try {
-        const admin = await adminModel.findById(authorizationId);
-        if (admin){
-            const category = await categoryModel.findById(newData.categoryId);
-            if (category) {
-                newData.category = category.name;
-            }
-            const product = await productModel.findOneAndUpdate({ _id: productId }, newData);
+        const userInfo = await userModel.findById(authorizationId);
+        if (userInfo){
+            const product = await cartModel.findOneAndUpdate({ product: productId }, newData);
             if (product) {
                 return {
-                    msg: getSuitableTranslations("Updating Product Info Process Has Been Successfully !!", language),
+                    msg: getSuitableTranslations("Updating Product Info Inside The Cart Process Has Been Successfully !!", language),
                     error: false,
                     data: {},
                 }
@@ -128,7 +122,7 @@ async function updateProduct(authorizationId, productId, newData, language) {
             }
         }
         return {
-            msg: getSuitableTranslations("Sorry, This Admin Is Not Exist !!", language),
+            msg: getSuitableTranslations("Sorry, This User Is Not Exist !!", language),
             error: true,
             data: {},
         }
@@ -140,7 +134,7 @@ async function updateProduct(authorizationId, productId, newData, language) {
 
 module.exports = {
     addNewProduct,
-    getAllProductsInsideTheCart,
+    getAllProducts,
     deleteProduct,
     updateProduct,
 }

@@ -743,6 +743,10 @@ const templateModel = mongoose.model("template", templateSchema);
 // Create Cart Schema
 
 const cartSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true,
+    },
     product: {
         type: mongoose.Types.ObjectId,
         ref: "product",
@@ -752,6 +756,7 @@ const cartSchema = new mongoose.Schema({
         type: Number,
         default: 1,
     },
+    designFiles: Array,
 });
 
 // Create Cart Model From Cart Schema

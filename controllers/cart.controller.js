@@ -31,9 +31,9 @@ async function postNewProduct(req, res) {
     }
 }
 
-async function getAllProductsInsideTheCart(req, res) {
+async function getAllProducts(req, res) {
     try {
-        res.json(await cartOperationsManagmentFunctions.getAllProductsInsideTheCart(queryObject.pageNumber, queryObject.pageSize, filtersAndSortDetailsObject.filtersObject, sortDetailsObject, queryObject.language));
+        res.json(await cartOperationsManagmentFunctions.getAllProducts(req.data._id, req.query.language));
     }
     catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
@@ -44,13 +44,12 @@ async function deleteProduct(req, res) {
     try {
         const result = await cartOperationsManagmentFunctions.deleteProduct(req.data._id, req.params.productId, req.query.language);
         if(!result.error) {
-            unlinkSync(result.data.deletedProductImagePath);
-            for (let productImagePath of result.data.galleryImagePathsForDeletedProduct) {
-                unlinkSync(productImagePath);
+            for (let designFile of result.data.designFiles) {
+                unlinkSync(designFile);
             }
         }
         else {
-            if (result.msg === "Sorry, This Admin Is Not Exist !!") {
+            if (result.msg === "Sorry, This User Is Not Exist !!") {
                 return res.status(401).json(result);
             }
         }
@@ -63,9 +62,9 @@ async function deleteProduct(req, res) {
 
 async function putProduct(req, res) {
     try {
-        const result = await cartOperationsManagmentFunctions.updateProduct(req.data._id, req.params.productId, { name, price, quantity, country, description, category, discount, tax, startDiscountPeriod, endDiscountPeriod, discountInOfferPeriod, offerDescription } = req.body, req.query.language);
+        const result = await cartOperationsManagmentFunctions.updateProduct(req.data._id, req.params.productId, { quantity } = req.body, req.query.language);
         if (result.error) {
-            if (result.msg === "Sorry, This Admin Is Not Exist !!") {
+            if (result.msg === "Sorry, This User Is Not Exist !!") {
                 return res.status(401).json(result);
             }
         }
@@ -78,7 +77,7 @@ async function putProduct(req, res) {
 
 module.exports = {
     postNewProduct,
-    getAllProductsInsideTheCart,
+    getAllProducts,
     deleteProduct,
     putProduct,
 }
