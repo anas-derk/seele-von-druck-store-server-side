@@ -103,6 +103,7 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    customizations: Object,
     galleryImagesPaths: Array,
     startDiscountPeriod: Date,
     endDiscountPeriod: Date,

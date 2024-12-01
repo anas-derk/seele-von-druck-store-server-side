@@ -22,19 +22,13 @@ const inititalTemplates = [
         name: "Bussiness Card",
         components: {
             types: [
-                { content: "" }
+                {
+                    content: "", 
+                    quantities: [
+                        { quantity: 1, price: 1 }
+                    ],
+                }
             ],
-            quantities: [
-                { quantity: 1, price: 1 }
-            ],
-            corner: {
-                type: "",
-                price: 0
-            },
-            isExistDesign: false,
-            isExistLogo: false,
-            isAttachAFile: false,
-            isDisplayStock: false,
         }
     },
     {
@@ -43,11 +37,6 @@ const inititalTemplates = [
             types: [
                 { content: "" }
             ],
-            dimentionsDetails: [
-                { width: 0, height: 0, price: 0 }
-            ],
-            isAttachAFile: false,
-            isDisplayStock: false,
         }
     },
     {
@@ -56,11 +45,6 @@ const inititalTemplates = [
             types: [
                 { content: "" }
             ],
-            dimentionsDetails: [
-                { width: 0, height: 0, price: 0 }
-            ],
-            isAttachAFile: false,
-            isDisplayStock: false,
         }
     }
 ];
