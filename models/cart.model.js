@@ -6,42 +6,32 @@ const { getSuitableTranslations } = require("../global/functions");
 
 async function addNewProduct(authorizationId, productInfo, language) {
     try {
-        const admin = await adminModel.findById(authorizationId);
-        if (admin){
-            const product = await productModel.findOne({ name: productInfo.name, category: productInfo.category });
-            if (!product) {
-                if (product.template) {
-                    if (!(await templateModel.findById(product.template))) {
-                        return {
-                            msg: getSuitableTranslations("Sorry, This Template Is Not Exist !!", language),
-                            error: true,
-                            data: {},
-                        }
-                    }
-                }
-                const category = await categoryModel.findById(productInfo.category);
-                if (category) {
-                    await (new productModel(productInfo)).save();
+        const userInfo = await userModel.findById(authorizationId);
+        if (userInfo){
+            const product = await productModel.findById(productInfo.productId);
+            if (product) {
+                if (await cartModel.findOne({ product: productInfo.productId })) {
                     return {
-                        msg: getSuitableTranslations("Adding New Product Process Has Been Successfuly !!", language),
-                        error: false,
+                        msg: getSuitableTranslations("Sorry, This Product Is Already Exist Inside The Cart For This User !!", language),
+                        error: true,
                         data: {},
                     }
                 }
+                await (new cartModel(productInfo)).save();
                 return {
-                    msg: getSuitableTranslations("Sorry, This Category Is Not Exist !!", language),
-                    error: true,
+                    msg: getSuitableTranslations("Adding New Product Process Has Been Successfuly !!", language),
+                    error: false,
                     data: {},
                 }
             }
             return {
-                msg: getSuitableTranslations("Sorry, This Product Is Already Exist !!", language),
+                msg: getSuitableTranslations("Sorry, This Product Is Not Exist !!", language),
                 error: true,
                 data: {},
             }
         }
         return {
-            msg: getSuitableTranslations("Sorry, This Admin Is Not Exist !!", language),
+            msg: getSuitableTranslations("Sorry, This User Is Not Exist !!", language),
             error: true,
             data: {},
         }

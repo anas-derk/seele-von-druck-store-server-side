@@ -42,7 +42,7 @@ cartRouter.post("/add-new-product",
     cartController.postNewProduct
 );
 
-cartRouter.get("/all-products", cartController.getAllProducts);
+cartRouter.get("/all-products", validateJWT, cartController.getAllProducts);
 
 cartRouter.delete("/:productId",
     validateJWT,

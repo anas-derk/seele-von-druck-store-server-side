@@ -7,20 +7,21 @@ const { unlinkSync } = require("fs");
 async function postNewProduct(req, res) {
     try {
         const productImages = Object.assign({}, req.files);
-        let files = [productImages.productImage[0].buffer], outputImageFilePaths = [`assets/images/cart/${Math.random()}_${Date.now()}__${productImages.productImage[0].originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`];
-        productImages.galleryImages.forEach((file) => {
+        let files = [], outputImageFilePaths = [`assets/images/cart/${Math.random()}_${Date.now()}__${productImages.productImage[0].originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`];
+        productImages.designImages.forEach((file) => {
             files.push(file.buffer);
-            outputImageFilePaths.push(`assets/images/products/${Math.random()}_${Date.now()}__${file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`)
+            outputImageFilePaths.push(`assets/images/cart/${Math.random()}_${Date.now()}__${file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`)
         });
-        await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
+        if (outputImageFilePaths.length > 0) {
+            await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
+        }
         const { language } = req.query;
         const result = await cartOperationsManagmentFunctions.addNewProduct(req.data._id, {
-            ...{ name, price, description, template, category, discount, tax, quantity } = Object.assign({}, req.body),
-            imagePath: outputImageFilePaths[0],
-            galleryImagesPaths: outputImageFilePaths.slice(1),
+            ...{ productId, quantity } = Object.assign({}, req.body),
+            designFiles: outputImageFilePaths,
         }, language);
         if (result.error) {
-            if (result.msg === "Sorry, This Admin Is Not Exist !!") {
+            if (result.msg === "Sorry, This User Is Not Exist !!") {
                 return res.status(401).json(result);
             }
         }
