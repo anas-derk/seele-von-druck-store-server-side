@@ -10,7 +10,7 @@ async function addNewProduct(authorizationId, productInfo, language) {
         if (admin){
             const product = await productModel.findOne({ name: productInfo.name, category: productInfo.category });
             if (!product) {
-                if (product.template) {
+                if (product?.template) {
                     if (!(await templateModel.findById(product.template))) {
                         return {
                             msg: getSuitableTranslations("Sorry, This Template Is Not Exist !!", language),

@@ -34,11 +34,11 @@ cartRouter.post("/add-new-product",
         const { productId, quantity } = Object.assign({}, req.body);
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Product Id", fieldValue: productId, dataType: "ObjectId", isRequiredValue: true },
-            { fieldName: "Quantity", fieldValue: quantity, dataType: "number", isRequiredValue: false },
+            { fieldName: "Quantity", fieldValue: Number(quantity), dataType: "number", isRequiredValue: true },
         ], res, next);
     },
-    (req, res, next) => validateNumbersIsGreaterThanZero([ ...{ quantity } = Object.assign({}, req.body)], res, next, ["Sorry, Please Send Valid Quantity( Number Must Be Greater Than Zero ) !!"]),
-    (req, res, next) => validateNumbersIsNotFloat([ ...{ quantity } = Object.assign({}, req.body)], res, next, ["Sorry, Please Send Valid Quantity( Number Must Be Not Float ) !!"]),
+    (req, res, next) => validateNumbersIsGreaterThanZero([ Object.assign({}, req.body).quantity ], res, next, ["Sorry, Please Send Valid Quantity( Number Must Be Greater Than Zero ) !!"]),
+    (req, res, next) => validateNumbersIsNotFloat([ Object.assign({}, req.body).quantity ], res, next, ["Sorry, Please Send Valid Quantity( Number Must Be Not Float ) !!"]),
     cartController.postNewProduct
 );
 

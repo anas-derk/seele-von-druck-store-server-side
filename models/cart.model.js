@@ -10,14 +10,12 @@ async function addNewProduct(authorizationId, productInfo, language) {
         if (userInfo){
             const product = await productModel.findById(productInfo.productId);
             if (product) {
-                if (await cartModel.findOne({ product: productInfo.productId })) {
-                    return {
-                        msg: getSuitableTranslations("Sorry, This Product Is Already Exist Inside The Cart For This User !!", language),
-                        error: true,
-                        data: {},
-                    }
-                }
-                await (new cartModel(productInfo)).save();
+                await (new cartModel({
+                    userId: authorizationId,
+                    product: productInfo.productId,
+                    quantity: productInfo.quantity,
+                    designFiles: productInfo.designFiles
+                })).save();
                 return {
                     msg: getSuitableTranslations("Adding New Product To Cart For This User Process Has Been Successfuly !!", language),
                     error: false,

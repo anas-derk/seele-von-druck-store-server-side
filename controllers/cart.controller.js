@@ -7,19 +7,18 @@ const { unlinkSync } = require("fs");
 async function postNewProduct(req, res) {
     try {
         const productImages = Object.assign({}, req.files);
-        let files = [], outputImageFilePaths = [`assets/images/cart/${Math.random()}_${Date.now()}__${productImages.productImage[0].originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`];
-        productImages.designImages.forEach((file) => {
-            files.push(file.buffer);
-            outputImageFilePaths.push(`assets/images/cart/${Math.random()}_${Date.now()}__${file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`)
-        });
-        if (outputImageFilePaths.length > 0) {
+        let files = [], outputImageFilePaths = [];
+        if (productImages?.designImages?.length > 0) {
+            productImages.designImages.forEach((file) => {
+                files.push(file.buffer);
+                outputImageFilePaths.push(`assets/images/cart/${Math.random()}_${Date.now()}__${file.originalname.replaceAll(" ", "_").replace(/\.[^/.]+$/, ".webp")}`)
+            });
             await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
         }
-        const { language } = req.query;
         const result = await cartOperationsManagmentFunctions.addNewProduct(req.data._id, {
             ...{ productId, quantity } = Object.assign({}, req.body),
             designFiles: outputImageFilePaths,
-        }, language);
+        }, req.query.language);
         if (result.error) {
             if (result.msg === "Sorry, This User Is Not Exist !!") {
                 return res.status(401).json(result);
