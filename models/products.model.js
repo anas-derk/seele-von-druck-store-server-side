@@ -106,6 +106,7 @@ async function getProductsByIds(productsIds, language) {
 async function getProductInfo(productId, language) {
     try {
         const productInfo = await productModel.findById(productId).populate("template");
+        productInfo.customizations = JSON.parse(productInfo.customizations);
         if (productInfo) {
             return {
                 msg: getSuitableTranslations("Get Product Info Process Has Been Successfuly !!", language),
