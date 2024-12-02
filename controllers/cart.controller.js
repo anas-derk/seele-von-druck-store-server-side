@@ -19,6 +19,10 @@ async function postNewProduct(req, res) {
             ...{ productId, quantity, type, width, height, typeQuantity, quantityPrice } = Object.assign({}, req.body),
             designFiles: outputImageFilePaths,
         }, req.query.language);
+        console.log({
+            ...{ productId, quantity, type, width, height, typeQuantity, quantityPrice } = Object.assign({}, req.body),
+            designFiles: outputImageFilePaths,
+        })
         if (result.error) {
             if (result.msg === "Sorry, This User Is Not Exist !!") {
                 return res.status(401).json(result);
