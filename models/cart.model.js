@@ -14,7 +14,10 @@ async function addNewProduct(authorizationId, productInfo, language) {
                     userId: authorizationId,
                     product: productInfo.productId,
                     quantity: productInfo.quantity,
-                    designFiles: productInfo.designFiles
+                    designFiles: productInfo.designFiles,
+                    ...(productInfo.type && {type: productInfo.type}),
+                    ...(productInfo.width && {width: productInfo.width}),
+                    ...(productInfo.height && {height: productInfo.height}),
                 })).save();
                 return {
                     msg: getSuitableTranslations("Adding New Product To Cart For This User Process Has Been Successfuly !!", language),

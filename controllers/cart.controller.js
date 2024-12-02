@@ -16,7 +16,7 @@ async function postNewProduct(req, res) {
             await handleResizeImagesAndConvertFormatToWebp(files, outputImageFilePaths);
         }
         const result = await cartOperationsManagmentFunctions.addNewProduct(req.data._id, {
-            ...{ productId, quantity } = Object.assign({}, req.body),
+            ...{ productId, quantity, type, width, height } = Object.assign({}, req.body),
             designFiles: outputImageFilePaths,
         }, req.query.language);
         if (result.error) {

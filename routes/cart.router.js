@@ -31,10 +31,13 @@ cartRouter.post("/add-new-product",
     ]),
     validateIsExistErrorInFiles,
     (req, res, next) => {
-        const { productId, quantity } = Object.assign({}, req.body);
+        const { productId, quantity, type, width, height } = Object.assign({}, req.body);
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Product Id", fieldValue: productId, dataType: "ObjectId", isRequiredValue: true },
             { fieldName: "Quantity", fieldValue: Number(quantity), dataType: "number", isRequiredValue: true },
+            { fieldName: "Type", fieldValue: type, dataType: "string", isRequiredValue: false },
+            { fieldName: "Width", fieldValue: Number(width), dataType: "number", isRequiredValue: false },
+            { fieldName: "Height", fieldValue: Number(height), dataType: "number", isRequiredValue: false },
         ], res, next);
     },
     (req, res, next) => validateNumbersIsGreaterThanZero([ Object.assign({}, req.body).quantity ], res, next, ["Sorry, Please Send Valid Quantity( Number Must Be Greater Than Zero ) !!"]),
