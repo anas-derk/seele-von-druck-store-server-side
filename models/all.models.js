@@ -763,6 +763,8 @@ const cartSchema = new mongoose.Schema({
     type: String,
     width: Number,
     height: Number,
+    typeQuantity: Number,
+    quantityPrice: Number,
     designFiles: Array,
 });
 
