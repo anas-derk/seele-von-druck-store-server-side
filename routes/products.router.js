@@ -36,7 +36,7 @@ productsRouter.post("/add-new-product",
         const { name, price, description, template, category, discount, tax, quantity, isStockDisplayed } = Object.assign({}, req.body);
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Name", fieldValue: name, dataType: "string", isRequiredValue: true },
-            { fieldName: "Price", fieldValue: Number(price), dataType: "number", isRequiredValue: true },
+            { fieldName: "Price", fieldValue: Number(price), dataType: "number", isRequiredValue: price < 0 },
             { fieldName: "Description", fieldValue: description, dataType: "string", isRequiredValue: true },
             { fieldName: "Template", fieldValue: template, dataType: "ObjectId", isRequiredValue: false },
             { fieldName: "Category Id", fieldValue: category, dataType: "ObjectId", isRequiredValue: true },
@@ -47,8 +47,8 @@ productsRouter.post("/add-new-product",
         ], res, next);
     },
     (req, res, next) => {
-        const { price, quantity, tax } = Object.assign({}, req.body);
-        validateNumbersIsGreaterThanZero([price, quantity, tax], res, next, ["Sorry, Please Send Valid Product Price ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Discount ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Quantity ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Tax ( Number Must Be Greater Than Zero ) !!"]);
+        const { quantity, tax } = Object.assign({}, req.body);
+        validateNumbersIsGreaterThanZero([quantity, tax], res, next, ["Sorry, Please Send Valid Product Discount ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Quantity ( Number Must Be Greater Than Zero ) !!", "Sorry, Please Send Valid Product Tax ( Number Must Be Greater Than Zero ) !!"]);
     },
     (req, res, next) => validateNumbersIsNotFloat([(Object.assign({}, req.body)).quantity], res, next, [], "Sorry, Please Send Valid Product Quantity !!"),
     (req, res, next) => {
