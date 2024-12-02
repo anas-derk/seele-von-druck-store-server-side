@@ -44,7 +44,7 @@ cartRouter.post("/add-new-product",
 
 cartRouter.get("/all-products", validateJWT, cartController.getAllProducts);
 
-cartRouter.delete("/:productId",
+cartRouter.delete("/:cartId",
     validateJWT,
     (req, res, next) => {
         validateIsExistValueForFieldsAndDataTypes([
@@ -54,7 +54,7 @@ cartRouter.delete("/:productId",
     cartController.deleteProduct
 );
 
-cartRouter.put("/:productId",
+cartRouter.put("/:cartId",
     validateJWT,
     (req, res, next) => {
         validateIsExistValueForFieldsAndDataTypes([
