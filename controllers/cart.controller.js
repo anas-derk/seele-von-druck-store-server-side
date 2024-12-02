@@ -42,7 +42,7 @@ async function getAllProducts(req, res) {
 
 async function deleteProduct(req, res) {
     try {
-        const result = await cartOperationsManagmentFunctions.deleteProduct(req.data._id, req.params.productId, req.query.language);
+        const result = await cartOperationsManagmentFunctions.deleteProduct(req.data._id, req.params.cartId, req.query.language);
         if(!result.error) {
             for (let designFile of result.data.designFiles) {
                 unlinkSync(designFile);

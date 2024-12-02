@@ -60,11 +60,11 @@ async function getAllProducts(authorizationId, language) {
     }
 }
 
-async function deleteProduct(authorizationId, productId, language) {
+async function deleteProduct(authorizationId, cartId, language) {
     try {
         const userInfo = await userModel.findById(authorizationId);
         if (userInfo){
-            const product = await cartModel.findOneAndDelete({ product: productId });
+            const product = await cartModel.findOneAndDelete({ _id: cartId });
             if (product) {
                 return {
                     msg: getSuitableTranslations("Deleting Product From Cart For This User Process Has Been Successfuly !!", language),
@@ -91,11 +91,11 @@ async function deleteProduct(authorizationId, productId, language) {
     }
 }
 
-async function updateProduct(authorizationId, productId, newData, language) {
+async function updateProduct(authorizationId, cartId, newData, language) {
     try {
         const userInfo = await userModel.findById(authorizationId);
         if (userInfo){
-            const product = await cartModel.findOneAndUpdate({ product: productId }, newData);
+            const product = await cartModel.findOneAndUpdate({ _id: cartId }, newData);
             if (product) {
                 return {
                     msg: getSuitableTranslations("Updating Product Info Inside The Cart For This User Process Has Been Successfully !!", language),

@@ -48,7 +48,7 @@ cartRouter.delete("/:productId",
     validateJWT,
     (req, res, next) => {
         validateIsExistValueForFieldsAndDataTypes([
-            { fieldName: "Product Id", fieldValue: req.params.productId, dataType: "ObjectId", isRequiredValue: true },
+            { fieldName: "Cart Id", fieldValue: req.params.cartId, dataType: "ObjectId", isRequiredValue: true },
         ], res, next);
     },
     cartController.deleteProduct
@@ -58,7 +58,7 @@ cartRouter.put("/:productId",
     validateJWT,
     (req, res, next) => {
         validateIsExistValueForFieldsAndDataTypes([
-            { fieldName: "Product Id", fieldValue: req.params.productId, dataType: "ObjectId", isRequiredValue: true },
+            { fieldName: "Cart Id", fieldValue: req.params.cartId, dataType: "ObjectId", isRequiredValue: true },
             { fieldName: "New Quantity", fieldValue: req.body.quantity, dataType: "number", isRequiredValue: true },
         ], res, next);
     },
